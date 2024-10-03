@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Corriente</title>
+  
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .contenedor {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+
+            max-width: 1000px;
+            margin: 20px;
+        }
+
+        .titulo {
+            font-size: 3em;
+            color: #000000;
+            margin-bottom: 30px;
+        }
+
+        .calculadora {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #img {
+            width: 800px;
+            height: auto;
+        }
+
+        .entrada {
+            margin: 20px 0;
+        }
+
+        .entrada label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .entrada input, .entrada select {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .boton-calcular {
+            background-color: #5e5e5e;
+            color: white;
+            font-size: 1em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        
+        }
+
+        .boton-calcular:hover {
+            background-color: #676767;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .resultado span {
+            color: #000000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1 class="titulo">Calculadora de Corriente</h1>
+        <div class="calculadora">
+            <img id="img" src="/img/esquema.png" alt="Esquema del circuito">
+            <div>
+                <div class="entrada">
+                    <label for="valor_resistencia">Valor de la Resistencia:</label>
+                    <input type="number" id="valor_resistencia" class="campo-resistencia" placeholder="Ingresa el valor">
+                </div>
+
+                <div class="entrada">
+                    <label for="unidad_resistencia">Unidad:</label>
+                    <select id="unidad_resistencia" class="selector-unidad">
+                        <option value="ohms">Ohms (Ω)</option>
+                        <option value="kohms">Kiloohms (KΩ)</option>
+                    </select>
+                </div>
+
+                <button class="boton-calcular" onclick="calcularCorriente()">Calcular Corriente</button>
+
+                <div class="resultado" id="resultado_corriente"></div>
+            </div>
+        </div>
+        <footer>
+            <br>
+            <br>
+            <p><p>
+                ISLAS CABRERA ERICK URIEL <br>
+                GRUPO: IC-51M
+   
+            </p></p>
+        </footer>
+    </div>
+ 
+
+    <script>
+        function calcularCorriente() {
+            const resistencia = parseFloat(document.getElementById('valor_resistencia').value);
+            const unidad = document.getElementById('unidad_resistencia').value;
+            let resistenciaEnOhms;
+
+            document.getElementById('resultado_corriente').innerText = '';
+
+            if (isNaN(resistencia) || resistencia <= 0) {
+                document.getElementById('resultado_corriente').innerText = "Ingresa un numero";
+                return;
+            }
+
+            if (unidad === "ohms") {
+                resistenciaEnOhms = resistencia;
+            } else if (unidad === "kohms") {
+                resistenciaEnOhms = resistencia * 1000;
+            }
+
+            const voltaje = 5; 
+            const corriente = (voltaje / resistenciaEnOhms) * 1000;
+
+            document.getElementById('resultado_corriente').innerHTML = `Corriente: <span>${corriente.toFixed(2)}</span> mA`;
+        }
+    </script>
+</body>
+</html>
